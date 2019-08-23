@@ -1,20 +1,10 @@
 @layout('layouts.main')
 
-@section('header')
-{{-- @super --}}
-<h1>{{ pageTitle || 'Untitled' }}</h1>
-@endsection
-
 @section('content')
-  {{--  组件  --}}
-  @component('components.list', {
-    entities,
-    border: true,
-    borderColor: '#ddeaf2'
-  })
-    {{--  槽  --}}
-    @slot('notes')
-      <small>Eat some fruits & vegetables everyday is good for your health.</small>
-    @endslot
-  @endcomponent
+  <div class="container">
+    @each(post in posts)
+      <h3 class="mt-5 mb-4">{{ post.title }}</h3>
+      <div>{{ post.content }}</div>
+    @endeach
+  </div>
 @endsection
