@@ -4,29 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  {{ style('css/main') }}
-  {{ script('js/main') }}
-  <title>{{ pageTitle || 'ninghao' }}</title>
+  {{ style('https://unpkg.com/bootstrap@4.0.0/dist/css/bootstrap.min.css') }}
+  {{ style('main') }}
+  <title>ninghao</title>
 </head>
-<body style="background: url({{ assetsUrl('splash.png') }})">
-  <div>
-    <small>URL: </small>{{ request.url() }}<br>
-    <small>OriginalUrl: </small>{{ request.originalUrl() }}<br>
-    <small>Method: </small>{{ request.method() }}<br>
-    <small>Protocol: </small>{{ request.protocol() }}<br>
-  </div>
-  <div class="container">
-    <div class="header">
-      @section('header')
-      <small>__headerSection__</small>
-      @endsection
-    </div>
-    <div class="content">
-      @section('content')
-        <p>There is no content yet.</p>
-      @endsection
-    </div>
-    @include('partials.footer')
-  </div>
+<body>
+  @!section('content')
+  {{ script('https://unpkg.com/jquery@3.3.1/dist/jquery.js') }}
+  {{ script('https://unpkg.com/bootstrap@4.0.0/dist/js/bootstrap.min.js') }}
+  {{ script('main') }}
 </body>
 </html>

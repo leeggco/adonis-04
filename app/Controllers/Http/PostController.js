@@ -1,35 +1,76 @@
 'use strict'
 
+const Database = use('Database')
+
 class PostController {
-  index({
+  async index() {}
+
+  async create({
     view
   }) {
-    const pageTitle = 'List of posts'
-    const user = {
-      name: 'wanghao'
-    }
-    const entities = [{
-        id: 1,
-        title: 'Lemon',
-        content: '🍋'
-      },
-      {
-        id: 2,
-        title: 'Watermelon',
-        content: '🍉'
-      },
-      {
-        id: 3,
-        title: 'Carrot',
-        content: '🥕'
-      }
-    ]
+    return view.render('post.create')
+  }
 
-    return view.render('posts.index', {
-      pageTitle,
-      user,
-      entities
+  async store({
+    request,
+    response
+  }) {
+    const newPost = request.only(['title', 'content'])
+    const postID = await Database.insert(newPost).into('posts')
+    console.log('postID: ', postID)
+    return response.redirect(`/posts/${ postID[0] }`)
+  }
+
+  async show({
+    view,
+    params
+  }) {
+    const post = await Database
+      .from('posts')
+      .where('id', params.id)
+      .first()
+
+    return view.render('post.show', {
+      post
     })
   }
+
+  async edit({
+    view,
+    params
+  }) {
+    const post = await Database
+      .from('posts')
+      .where('id', params.id)
+      .first()
+
+    return view.render('post.edit', {
+      post
+    })
+  }
+
+  async update({
+    request,
+    params
+  }) {
+    const updatedPost = request.only(['title', 'content'])
+    await Database
+      .table('posts')
+      .where('id', params.id)
+      .update(updatedPost)
+  }
+
+  async destroy({
+    request,
+    params
+  }) {
+    await Database
+      .table('posts')
+      .where('id', params.id)
+      .delete()
+
+    return 'success'
+  }
 }
+
 module.exports = PostController

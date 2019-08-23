@@ -6,11 +6,13 @@
 @endsection
 
 @section('content')
+  {{--  组件  --}}
   @component('components.list', {
     entities,
     border: true,
     borderColor: '#ddeaf2'
   })
+    {{--  槽  --}}
     @slot('notes')
       <small>Eat some fruits & vegetables everyday is good for your health.</small>
     @endslot
