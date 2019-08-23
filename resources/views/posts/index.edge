@@ -1,0 +1,18 @@
+@layout('layouts.main')
+
+@section('header')
+{{-- @super --}}
+<h1>{{ pageTitle || 'Untitled' }}</h1>
+@endsection
+
+@section('content')
+  @component('components.list', {
+    entities,
+    border: true,
+    borderColor: '#ddeaf2'
+  })
+    @slot('notes')
+      <small>Eat some fruits & vegetables everyday is good for your health.</small>
+    @endslot
+  @endcomponent
+@endsection
