@@ -7,6 +7,16 @@ const Hash = use('Hash')
 const Model = use('Model')
 
 class User extends Model {
+  // 建立一对一关系
+  profile() {
+    return this.hasOne('App/Models/Profile')
+  }
+
+  // 建立一对多关系
+  posts() {
+    return this.hasMany('App/Models/Post')
+  }
+
   static boot () {
     super.boot()
 
