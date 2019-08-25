@@ -23,6 +23,9 @@ Route.resource('posts', 'PostController')
 Route.resource('users', 'UserController')
 Route.resource('tags', 'TagController')
 
+Route.get('register', 'UserController.create').as('signup')
+
+Route.get('users/create', ({ response }) => response.route('signup'))
 
 Route.get('profiles/:id', async ({ params }) => {
 	const profile = await Profile.find(params.id)

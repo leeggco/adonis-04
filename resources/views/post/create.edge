@@ -3,54 +3,52 @@
 @section('content')
   <div class="container">
     <h3 class="mt-5 mb-4">Add New Post</h3>
-    {{--  表单  --}}
-    <form action="/posts" method="POST">
-      <div class="form-group">
-        <label for="title">Title</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Enter title here"
-          name="title">
-      </div>
-      <div class="form-group">
-        <label for="content">Content</label>
-        <textarea
-          name="content"
-          cols="30" rows="10"
-          class="form-control"
-          placeholder="Write something amazing"></textarea>
-      </div>
-      {{--  作者  --}}
-      <div class="form-group">
-        <span class="px-3 text-muted"><i class="fas fa-user"></i></span>
-        @each(user in users)
-          <div class="form-check form-check-inline">
-            <input type="radio"
-              name="user_id"
-              value="{{ user.id }}"
-              id="user-{{ user.id }}" class="form-check-input">
-            <label for="user-{{ user.id }}" class="form-check-label">
-              {{ user.username }}
-            </label>
-          </div>
-        @endeach
-      </div>
-      {{--  标签  --}}
-      <div class="form-group">
-        <span class="px-3 text-muted"><i class="fas fa-tags"></i></span>
-        @each(tag in tags)
-          <div class="form-check form-check-inline">
-            <input type="checkbox"
-              name="tags"
-              value="{{ tag.id }}"
-              id="tag-{{ tag.id }}" class="form-check-input">
-            <label for="tag-{{ tag.id }}" class="form-check-label">
-              {{ tag.title }}
-            </label>
-          </div>
-        @endeach
-      </div>
+    <form action="{{ route('PostController.store') }}" method="POST">
+      @!component('components.form.input', {
+        name: 'title',
+        label: 'Title',
+        placeholder: 'Enter title here',
+        getErrorFor,
+        hasErrorFor,
+        old
+      })
+
+      @!component('components.form.textarea', {
+        name: 'content',
+        label: 'Content',
+        placeholder: 'Write something amazing',
+        getErrorFor,
+        hasErrorFor,
+        old
+      })
+
+      @component('components.form.radio-horizontal', {
+        name: 'user_id',
+        items: users,
+        value: 'id',
+        label: 'username',
+        inline: true,
+        labelCol: 1
+      })
+        @slot('label')
+          用户：
+        @endslot
+      @endcomponent
+
+      @component('components.form.radio-horizontal', {
+        type: 'checkbox',
+        name: 'tags',
+        items: tags,
+        value: 'id',
+        label: 'title',
+        inline: true,
+        labelCol: 1
+      })
+        @slot('label')
+          标签：
+        @endslot
+      @endcomponent
+
       {{ csrfField() }}
       <button class="btn btn-primary" type="submit">Submit</button>
     </form>
