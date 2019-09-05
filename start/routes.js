@@ -19,6 +19,10 @@ const Profile = use('App/Models/Profile')
 
 Route.on('/').render('welcome')
 
+Route.get('login', 'AuthController.login').as('login')
+Route.post('auth', 'AuthController.auth').as('auth')
+Route.post('logout', 'AuthController.logout').as('logout')
+
 Route.resource('posts', 'PostController')
 Route.resource('users', 'UserController')
 Route.resource('tags', 'TagController')
